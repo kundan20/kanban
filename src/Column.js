@@ -27,9 +27,6 @@ const Column = props => {
     const [currentCol, setCurrentCol ] = useState()
 
     const { column, tasks, index } = props
-
-   console.log('props col ', props)
-
     const closeModal = () => {
         setIsItem(false)
     }
@@ -107,6 +104,7 @@ const Column = props => {
                 id: newTaskId,
                 title: formData.title,
                 content: formData.desc,
+                status: 'WIP',
                 creationTime: moment(new Date()).format('DD/MM/YYYY, HH:mm:ss')
             }
             let colObjs = {...initialData.columns}
@@ -221,4 +219,4 @@ const Column = props => {
     )
 }
 
-export default Column
+export default React.memo(Column)

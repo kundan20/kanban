@@ -9,8 +9,45 @@
 }
 .bg-sky {
   background: #EDF6FF;
-  position: relative;
+min-height: 100vh;
 }
+.item-status {
+  padding: 0.2em;
+  border-radius: 5px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.5rem;
+}
+.search-icons i {
+  position: absolute;
+}
+.search-icons {
+  width: 100%;
+}
+.icon {
+  padding: 0.7em;
+  min-width: 40px;
+  color: #6C757D;
+}
+.serach-bar {
+  padding: 0.7em;
+  width: 100%;
+  text-align: center;
+}
+.item-status.done {
+  background: #0D9855;
+  border: 1px solid #0D9855;
+}
+.item-status.rejected {
+  background: #eb5a46;
+  border: 1px solid #eb5a46;
+}
+.item-status.wip {
+  background: #f68b22;
+  border: 1px solid #f68b22;
+}
+
 .item-desc {
   color: #303F60;
 }
@@ -78,4 +115,9 @@
 }
 .card-header.list .close-icon {
   color: #fff;
+}
+@media screen and (max-width: 767px) {
+  .mt-1rem {
+    margin-top: 1rem;
+  }
 }

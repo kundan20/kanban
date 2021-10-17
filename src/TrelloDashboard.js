@@ -9,6 +9,8 @@ import { DragDropContext } from 'react-beautiful-dnd'
 const TrelloDashboard = () => {
     const [ formData, setFormData ] = useState({})
     const [ errorsData, setErrorsData ] = useState({})
+    const [ searchVal, setSearchVal ] = useState()
+
     const [isList, setIsList ] = useState(false)
     const [isItem, setIsItem ] = useState(false)
     const [initialData, setInitalData ] = useState(master.initialData)
@@ -17,7 +19,6 @@ const TrelloDashboard = () => {
 
 
     useEffect(() => {
-            console.log('Trello Dash comp')
             let initialData = JSON.parse(localStorage.getItem('initialData'))
             if(initialData === null ) {
                 localStorage.setItem('initialData', JSON.stringify(master.initialData))
@@ -39,10 +40,42 @@ const TrelloDashboard = () => {
             })
         }
     }
+
+    const setSearchValue = (e) => {
+        console.log('searchVal ', e.target.value.toLowerCase())
+        let initialData = JSON.parse(localStorage.getItem('initialData'));
+
+        const filtered = Object.fromEntries(Object.entries(initialData.tasks).filter(([task, taskVal]) => 
+            taskVal.status.toLowerCase().includes(e.target.value.toLowerCase()) || 
+            taskVal.title.toLowerCase().includes(e.target.value.toLowerCase())))
+        
+        initialData.tasks = filtered
+
+        if(Object.keys(filtered).length > 0) {
+            Object.fromEntries(Object.entries(initialData.columns).filter(([col, colVal]) => {
+                    const temp = []
+                    for (const [key] of Object.entries(filtered)) {
+                        colVal.taskIds.map((taskId) => {
+                            if(taskId === key) {
+                                temp.push(taskId)                            
+                            }
+                        })
+                    }
+                    colVal.taskIds = temp;
+                } 
+            ))
+        }
+        if(Object.keys(initialData.tasks).length > 0) {
+            setInitalData(initialData)
+        }
+    }
+ 
+
     const reRenderHandler = () => {
         let initialData = JSON.parse(localStorage.getItem('initialData'))
         setInitalData(initialData)
     }
+
     const errorFormsHandler = () => {
         const { title } = formData
         const errorsObj = {}        
@@ -52,7 +85,6 @@ const TrelloDashboard = () => {
 
     const addListHandler = () => {
         setIsList(true)
-
     }
 
     const addItemsHandler = (isItem, colId) => {
@@ -175,11 +207,24 @@ const TrelloDashboard = () => {
         <div className = "bg-sky">
             <Container className = "py-4 overflow-hidden bg-sky">
                 <Row className = "mt-2">
-                    <Col md={10} xs={10}>
+                    <Col md={4} >
                         <h4 className = "trello-dash">{constants.TRELLO_TITLE} &nbsp;<i className="fas fa-tachometer-alt"></i></h4>
                     </Col>
-                    <Col md= {2} xs={2}>
-                        <Button className = "trello-btn" onClick = {addListHandler}>{constants.ADD_LIST}</Button>
+                    <Col md={4} >
+                        <div className="search-icons ">
+                            <i className="fa fa-search icon"></i>
+                            <input 
+                                type= "text" 
+                                className = "serach-bar form-control" 
+                                placeholder = "Search by name / status..."
+                                name = "searchVal" 
+                                value = {searchVal} 
+                                onChange = {setSearchValue}
+                            />
+                        </div> 
+                    </Col>
+                    <Col md= {{offset:2, span:2}}>
+                        <Button className = "trello-btn mt-1rem" onClick = {addListHandler}>{constants.ADD_LIST}</Button>
                     </Col>
                 </Row>
                 <Row  className = "mt-2"> 

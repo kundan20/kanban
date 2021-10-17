@@ -4,6 +4,7 @@ import { Draggable } from 'react-beautiful-dnd'
 // import * as moment from 'moment'
 const Task = (props) => {
     const { item, index, colId, taskRenderHandler } = props
+
     const deleteItemHandler = (itemId) => {
         console.log('props Task itemId colId', itemId, colId)
         let initialData = JSON.parse(localStorage.getItem('initialData'))
@@ -46,7 +47,7 @@ const Task = (props) => {
                         <Card.Header>
                             <Row className = "list "> 
                                 <Col>
-                                    <div className = "list-title">{item.title}</div>
+                                    <div className = "list-title">{item.title} <span className={`item-status ${item.status === 'DONE' ? 'done' : item.status === 'WIP' ? 'wip' : 'rejected'}`}>{item.status}</span></div>
                                 </Col>
                                 <Col>
                                     <div className ="close-icon" onClick = {() => deleteItemHandler(item.id)}><i className="fas fa-times "></i></div>
