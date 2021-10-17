@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.bg-sky {
+  background: #EDF6FF;
+  position: relative;
+}
+.item-desc {
+  color: #303F60;
+}
+.date-time {
+  text-align: right;
+  font-weight: 400;
+}
+.cur-ptr {
+  cursor: pointer;
+}
+.ht-child {
+  height: 50vh;
+  overflow-y: auto;
+}
+.add-items {
+  text-align: center;
+  margin: 1rem 0rem;
+}
+.plus-icon {
+  color: #1963af;
+  font-size: 1.8rem;
+}
+.forms {
+  padding: 2em;
+}
+.trello-dash {
+  color: #f68b22;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+.trello-btn.btn {
+  background: #1963af;
+  border: 1px solid #1963af;
+  color: white;
+  padding: 0.5em 1.5em;
+}
+.trello-btn.btn.cancel {
+  background: #303030;
+  border: 1px solid #303030;
+  color: white;
+  padding: 0.5em 1.5em;
+  margin-left: 1rem;
+}
+.parents-card {
+  height: 85vh;
+  width: 100%;
+  box-shadow: 0px 3px 6px #557DA526;
+
+}
+.close-icon {
+  color: #303F60;
+  font-size: 1.2rem;
+  text-align: right;
+  cursor: pointer;
+}
+.applicant-btm-brdr {
+  opacity: 0.2;
+  border-bottom: 1px solid #303F60;
+}
+.card-header.list {
+  background: #1963af;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.card-header.list .close-icon {
+  color: #fff;
+}
