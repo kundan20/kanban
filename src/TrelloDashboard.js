@@ -5,10 +5,18 @@ import * as master from './shared/MasterData'
 import Modal from 'react-awesome-modal'
 import Column from './Column'
 import { DragDropContext } from 'react-beautiful-dnd'
+import {CommonService} from './shared/CommonService'
+import Header from './shared/Header'
+import BannerHeader from './BannerHeader'
+import Board from './Board'
+const cs = new CommonService()
 
 const TrelloDashboard = () => {
     const [ formData, setFormData ] = useState({})
     const [ errorsData, setErrorsData ] = useState({})
+    const [ peopleData, setPeopleData ] = useState()
+    const [ planetData, setPlanetData ] = useState()
+
     const [ searchVal, setSearchVal ] = useState()
 
     const [isList, setIsList ] = useState(false)
@@ -42,7 +50,7 @@ const TrelloDashboard = () => {
     }
 
     const setSearchValue = (e) => {
-        console.log('searchVal ', e.target.value.toLowerCase())
+        
         let initialData = JSON.parse(localStorage.getItem('initialData'));
 
         const filtered = Object.fromEntries(Object.entries(initialData.tasks).filter(([task, taskVal]) => 
@@ -68,6 +76,23 @@ const TrelloDashboard = () => {
         if(Object.keys(initialData.tasks).length > 0) {
             setInitalData(initialData)
         }
+
+        // cs.getPeople(e.target.value).then((res) => {
+        //     console.log('getPeople res--', res)
+        //     if(res && res.results) {
+        //         setPeopleData(res.results)
+        //     }
+        // }).catch((err) => {
+        //     console.log('Something went wrong ', err)
+        // })
+        // cs.getPlanet(e.target.value).then((res) => {
+        //     console.log('getPlanet res--', res)
+        //     if(res && res.results) {
+        //         setPlanetData(res.results)
+        //     }
+        // }).catch((err) => {
+        //     console.log('Something went wrong ', err)
+        // })
     }
  
 
@@ -89,7 +114,7 @@ const TrelloDashboard = () => {
 
     const addItemsHandler = (isItem, colId) => {
         setIsItem(isItem)
-        console.log('isItem, colId ',isItem, colId)
+        // console.log('isItem, colId ',isItem, colId)
     }
 
     const closeModal = () => {
@@ -144,7 +169,7 @@ const TrelloDashboard = () => {
             const newTaskIds = Array.from(start.taskIds)
             newTaskIds.splice(source.index, 1)
             newTaskIds.splice(destination.index, 0, draggableId)
-            console.log('newTaskIds--', newTaskIds)
+            // console.log('newTaskIds--', newTaskIds)
             const newColumn = {
                 ...start,
                 taskIds: newTaskIds
@@ -173,21 +198,21 @@ const TrelloDashboard = () => {
             ...finish,
             taskIds: finishTaskIds
         }
-        console.log('new Finish ', newFinish)
-        console.log('new initialData ', initialData)
+        // console.log('new Finish ', newFinish)
+        // console.log('new initialData ', initialData)
 
         const destTaskIds = newFinish.taskIds
         const destTasks = destTaskIds.map(item => initialData.tasks[item])
-        console.log('new destTasks ', destTasks)
+        // console.log('new destTasks ', destTasks)
         const newFinishTaskIds = []
         const sortedDestTasks = destTasks.sort((a, b) => {
             return new Date(b.creationTime) - new Date(a.creationTime)
         })
-        console.log('new sortedDestTasks ', sortedDestTasks)
+        // console.log('new sortedDestTasks ', sortedDestTasks)
         sortedDestTasks.forEach((item) => {
             newFinishTaskIds.push(item.id)
         })
-        console.log('new newFinishTaskIds ', newFinishTaskIds)
+        // console.log('new newFinishTaskIds ', newFinishTaskIds)
 
         newFinish.taskIds = newFinishTaskIds
 
@@ -204,12 +229,14 @@ const TrelloDashboard = () => {
     }
 
     return (
-        <div className = "bg-sky">
-            <Container className = "py-4 overflow-hidden bg-sky">
-                <Row className = "mt-2">
-                    <Col md={4} >
-                        <h4 className = "trello-dash">{constants.TRELLO_TITLE} &nbsp;<i className="fas fa-tachometer-alt"></i></h4>
-                    </Col>
+        <div className = "bg-blue">
+            <Header />
+            <BannerHeader />
+            <Board />
+            <div className="d-sm-none d-block"> <br/><br/></div>
+           
+            <Container className = "p-0 m-0 m-2">
+                <Row className = "mt-2">                    
                     <Col md={4} >
                         <div className="search-icons ">
                             <i className="fa fa-search icon"></i>
@@ -221,19 +248,21 @@ const TrelloDashboard = () => {
                                 value = {searchVal} 
                                 onChange = {setSearchValue}
                             />
+                            
                         </div> 
+
                     </Col>
-                    <Col md= {{offset:2, span:2}}>
-                        <Button className = "trello-btn mt-1rem" onClick = {addListHandler}>{constants.ADD_LIST}</Button>
+                    <Col md={4}>
+                        <button className = "common-btn signup board-btn add-list-btn" onClick = {addListHandler}>{constants.ADD_LIST}</button>
                     </Col>
                 </Row>
-                <Row  className = "mt-2"> 
+            </Container>
+            <Container className = " overflow-hidden bg-sky pb-4 ">
+                <Row  className = "mt-1"> 
                     <DragDropContext onDragEnd = {onDragEnd}>                    
                         {initialData !== undefined && initialData.columnOrder.map((list, ind) => {
-                            // console.log('initialData -trello ', initialData)
                             const column = initialData.columns[list]
-                            const tasks = column.taskIds.length !== 0 && column.taskIds.map((taskId, taskInd) =>  initialData.tasks[taskId])
-                            
+                            const tasks = column.taskIds.length !== 0 && column.taskIds.map((taskId, taskInd) =>  initialData.tasks[taskId])                            
                             return (
                                 <Column key = {column.id} column = {column} tasks = {tasks} onChange = {() => addItemsHandler()} reRenderHandler = {reRenderHandler}  index = {ind}/>
                             )

@@ -62,15 +62,15 @@ const Column = props => {
         if(initialData === null ) {
             localStorage.setItem('initialData', JSON.stringify(master.initialData))
         } else {
-            console.log('initialData  deleteListHandler currentColId', initialData, currentColId)
+            // console.log('initialData  deleteListHandler currentColId', initialData, currentColId)
 
             let newColOrder = [...initialData.columnOrder]
-            console.log('newColOrder before', newColOrder)
+            // console.log('newColOrder before', newColOrder)
 
             newColOrder.splice(currentColIndex, 1)
-            console.log(newColOrder)
+            // console.log(newColOrder)
             let tempColms = {...initialData.columns}
-            console.log('tempColms ', tempColms)
+            // console.log('tempColms ', tempColms)
             delete tempColms[currentColId]
 
             let newState = {
@@ -78,7 +78,7 @@ const Column = props => {
                 columns: tempColms,
                 columnOrder: newColOrder
             }
-            console.log('newState after', newState)
+            // console.log('newState after', newState)
             localStorage.setItem('initialData', JSON.stringify(newState))
             props.reRenderHandler()
 

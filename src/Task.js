@@ -4,22 +4,22 @@ import { Draggable } from 'react-beautiful-dnd'
 // import * as moment from 'moment'
 const Task = (props) => {
     const { item, index, colId, taskRenderHandler } = props
-
+    // console.log('Task comp')
     const deleteItemHandler = (itemId) => {
-        console.log('props Task itemId colId', itemId, colId)
+        // console.log('props Task itemId colId', itemId, colId)
         let initialData = JSON.parse(localStorage.getItem('initialData'))
         let currentTasksObj = {...initialData.tasks}
         delete currentTasksObj[itemId]
-        console.log('currentTasksObj ', currentTasksObj)
+        // console.log('currentTasksObj ', currentTasksObj)
         let colObjs = {...initialData.columns}
-        console.log('colObjs-', colObjs)
+        // console.log('colObjs-', colObjs)
 
         let currentColObj = colObjs[colId]
         let colTaskIds = [...currentColObj.taskIds]
         const newColTaskIds = colTaskIds.filter(task => {
             return task !== itemId
         })
-        console.log('newColTaskIds-', newColTaskIds)
+        // console.log('newColTaskIds-', newColTaskIds)
 
         initialData.columns[colId].taskIds = newColTaskIds
 
@@ -28,7 +28,7 @@ const Task = (props) => {
             tasks: currentTasksObj,
             columns: colObjs
         }
-        console.log('newState  after deleting task-', newState)
+        // console.log('newState  after deleting task-', newState)
         localStorage.setItem('initialData', JSON.stringify(newState))
         taskRenderHandler()
 
@@ -41,9 +41,8 @@ const Task = (props) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref = {provided.innerRef}
-                    isDragging = {snapshot.isDragging} //for bg color
                 >
-                    <Card key={item.id} className = {`mb-3 `}>
+                    <Card key={item.id} className = {`mb-3 task-card`}>
                         <Card.Header>
                             <Row className = "list "> 
                                 <Col>
@@ -73,4 +72,5 @@ const Task = (props) => {
         </Draggable>
     )
 }
+
 export default React.memo(Task)
