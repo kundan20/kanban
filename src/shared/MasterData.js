@@ -43,3 +43,36 @@ export const initialData = {
     },
     columnOrder: ['column-1', 'column-2']
 }
+
+export const activityData = [
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    },
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    },
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    },
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    },
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    },
+    {
+        name: 'Andrew Hyde',
+        content: 'made this board visible to the public',
+        date: 'Mar 13, 2012 at 8:42 PM'
+    }
+]
