@@ -76,24 +76,26 @@ const TrelloDashboard = () => {
         if(Object.keys(initialData.tasks).length > 0) {
             setInitalData(initialData)
         }
-
-        // cs.getPeople(e.target.value).then((res) => {
-        //     console.log('getPeople res--', res)
-        //     if(res && res.results) {
-        //         setPeopleData(res.results)
-        //     }
-        // }).catch((err) => {
-        //     console.log('Something went wrong ', err)
-        // })
-        // cs.getPlanet(e.target.value).then((res) => {
-        //     console.log('getPlanet res--', res)
-        //     if(res && res.results) {
-        //         setPlanetData(res.results)
-        //     }
-        // }).catch((err) => {
-        //     console.log('Something went wrong ', err)
-        // })
     }
+
+    const setSearchValApiCall = (e) => {
+         cs.getPeople(e.target.value).then((res) => {
+            console.log('getPeople res--', res)
+            if(res && res.results) {
+                setPeopleData(res.results)
+            }
+        }).catch((err) => {
+            console.log('Something went wrong ', err)
+        })
+        cs.getPlanet(e.target.value).then((res) => {
+            console.log('getPlanet res--', res)
+            if(res && res.results) {
+                setPlanetData(res.results)
+            }
+        }).catch((err) => {
+            console.log('Something went wrong ', err)
+        })
+    } 
  
 
     const reRenderHandler = () => {
